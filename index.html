@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frase Simples e Complexa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ===== TOKENS ===== */
+:root,[data-theme="light"]{
+  --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;
+  --color-surface-offset:#f3f0ec;--color-surface-offset-2:#edeae5;
+  --color-surface-dynamic:#e6e4df;--color-divider:#dcd9d5;--color-border:#d4d1ca;
+  --color-text:#28251d;--color-text-muted:#7a7974;--color-text-faint:#bab9b4;
+  --color-text-inverse:#f9f8f4;
+  --color-primary:#01696f;--color-primary-hover:#0c4e54;--color-primary-active:#0f3638;
+  --color-primary-highlight:#cedcd8;
+  --color-success:#437a22;--color-success-hover:#2e5c10;--color-success-highlight:#d4dfcc;
+  --color-error:#a12c7b;--color-error-hover:#7d1e5e;--color-error-highlight:#e0ced7;
+  --color-warning:#964219;--color-warning-highlight:#ddcfc6;
+  --color-orange:#da7101;--color-orange-highlight:#e7d7c4;
+  --color-gold:#d19900;--color-gold-highlight:#e9e0c6;
+  --color-blue:#006494;--color-blue-highlight:#c6d8e4;
+  --color-purple:#7a39bb;--color-purple-highlight:#dacfde;
+  --radius-sm:0.375rem;--radius-md:0.5rem;--radius-lg:0.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
+  --shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+  --shadow-lg:0 12px 32px oklch(0.2 0.01 80/0.12);
+  --transition:180ms cubic-bezier(0.16,1,0.3,1);
+  --text-xs:clamp(0.75rem,0.7rem + 0.25vw,0.875rem);
+  --text-sm:clamp(0.875rem,0.8rem + 0.35vw,1rem);
+  --text-base:clamp(1rem,0.95rem + 0.25vw,1.125rem);
+  --text-lg:clamp(1.125rem,1rem + 0.75vw,1.5rem);
+  --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+  --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+  --space-1:0.25rem;--space-2:0.5rem;--space-3:0.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
+  --space-12:3rem;--space-16:4rem;--space-20:5rem;
+  --font-display:'Instrument Serif',Georgia,serif;
+  --font-body:'Nunito','Segoe UI',sans-serif;
+}
+[data-theme="dark"]{
+  --color-bg:#171614;--color-surface:#1c1b19;--color-surface-2:#201f1d;
+  --color-surface-offset:#1d1c1a;--color-surface-offset-2:#22211f;
+  --color-surface-dynamic:#2d2c2a;--color-divider:#262523;--color-border:#393836;
+  --color-text:#cdccca;--color-text-muted:#797876;--color-text-faint:#5a5957;
+  --color-text-inverse:#2b2a28;
+  --color-primary:#4f98a3;--color-primary-hover:#227f8b;--color-primary-active:#1a626b;
+  --color-primary-highlight:#313b3b;
+  --color-success:#6daa45;--color-success-hover:#4d8f25;--color-success-highlight:#3a4435;
+  --color-error:#d163a7;--color-error-hover:#b9478f;--color-error-highlight:#4c3d46;
+  --color-warning:#bb653b;--color-warning-highlight:#564942;
+  --color-orange:#fdab43;--color-orange-highlight:#564b3e;
+  --color-gold:#e8af34;--color-gold-highlight:#4d4332;
+  --color-blue:#5591c7;--color-blue-highlight:#3a4550;
+  --color-purple:#a86fdf;--color-purple-highlight:#4e4652;
+  --shadow-sm:0 1px 2px oklch(0 0 0/0.2);--shadow-md:0 4px 12px oklch(0 0 0/0.3);
+  --shadow-lg:0 12px 32px oklch(0 0 0/0.4);
+}
+
+/* ===== BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:4rem;}
+body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);background:var(--color-bg);line-height:1.6;}
+img,svg{display:block;max-width:100%;}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
+a,button,[role="button"]{transition:color var(--transition),background var(--transition),border-color var(--transition),box-shadow var(--transition);}
+::selection{background:oklch(from var(--color-primary) l c h/0.2);color:var(--color-text);}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:3px;border-radius:var(--radius-sm);}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.2;}
+p,li{text-wrap:pretty;max-width:72ch;}
+
+/* ===== LAYOUT ===== */
+.app-layout{display:grid;grid-template-columns:260px 1fr;grid-template-rows:auto 1fr;min-height:100dvh;}
+.topbar{grid-column:1/-1;display:flex;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-6);background:var(--color-surface);border-bottom:1px solid oklch(from var(--color-text) l c h/0.1);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);}
+.sidebar{background:var(--color-surface);border-right:1px solid oklch(from var(--color-text) l c h/0.08);padding:var(--space-4) 0;overflow-y:auto;position:sticky;top:53px;height:calc(100dvh - 53px);}
+.main-content{padding:var(--space-8) var(--space-8);overflow-y:auto;}
+.container{max-width:860px;margin-inline:auto;}
+
+/* ===== TOPBAR ===== */
+.logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);font-size:var(--text-lg);color:var(--color-text);text-decoration:none;}
+.logo-icon{width:36px;height:36px;flex-shrink:0;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:var(--space-3);}
+.theme-toggle{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-full);color:var(--color-text-muted);transition:background var(--transition),color var(--transition);}
+.theme-toggle:hover{background:var(--color-surface-offset);color:var(--color-text);}
+.progress-bar-wrap{flex:1;max-width:200px;height:6px;background:var(--color-surface-dynamic);border-radius:var(--radius-full);overflow:hidden;}
+.progress-bar-fill{height:100%;background:var(--color-primary);border-radius:var(--radius-full);transition:width 0.4s cubic-bezier(0.16,1,0.3,1);}
+.progress-label{font-size:var(--text-xs);color:var(--color-text-muted);white-space:nowrap;}
+
+/* ===== SIDEBAR NAV ===== */
+.nav-section-label{font-size:var(--text-xs);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-faint);padding:var(--space-4) var(--space-5) var(--space-2);}
+.nav-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-2) var(--space-5);font-size:var(--text-sm);color:var(--color-text-muted);cursor:pointer;border-left:3px solid transparent;transition:all var(--transition);user-select:none;text-decoration:none;}
+.nav-item:hover{color:var(--color-text);background:var(--color-surface-offset);}
+.nav-item.active{color:var(--color-primary);background:var(--color-primary-highlight);border-left-color:var(--color-primary);font-weight:600;}
+.nav-item.done .nav-dot{background:var(--color-success);}
+.nav-item.done{color:var(--color-text-muted);}
+.nav-dot{width:8px;height:8px;border-radius:var(--radius-full);background:var(--color-border);flex-shrink:0;transition:background var(--transition);}
+.nav-item.active .nav-dot{background:var(--color-primary);}
+.nav-badge{margin-left:auto;font-size:var(--text-xs);padding:1px 7px;border-radius:var(--radius-full);background:var(--color-surface-dynamic);color:var(--color-text-muted);}
+.nav-badge.quiz{background:var(--color-gold-highlight);color:var(--color-gold);}
+.nav-divider{height:1px;background:var(--color-divider);margin:var(--space-3) var(--space-5);}
+
+/* ===== VIEWS ===== */
+.view{display:none;animation:fadeIn 0.25s ease;}
+.view.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== SECTION HEADINGS ===== */
+.page-header{margin-bottom:var(--space-8);}
+.page-label{display:inline-block;font-size:var(--text-xs);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--color-primary);margin-bottom:var(--space-2);}
+.page-title{font-family:var(--font-display);font-size:var(--text-xl);color:var(--color-text);margin-bottom:var(--space-3);}
+.page-subtitle{font-size:var(--text-base);color:var(--color-text-muted);max-width:60ch;}
+
+/* ===== CARDS ===== */
+.card{background:var(--color-surface);border:1px solid oklch(from var(--color-text) l c h/0.08);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-sm);margin-bottom:var(--space-6);}
+.card-title{font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);color:var(--color-text);}
+.card-title small{font-size:var(--text-sm);font-weight:400;color:var(--color-text-muted);margin-left:var(--space-2);}
+
+/* ===== DEFINITION BOX ===== */
+.def-box{background:var(--color-primary-highlight);border:1px solid color-mix(in oklch,var(--color-primary) 25%,transparent);border-radius:var(--radius-lg);padding:var(--space-5);margin-bottom:var(--space-6);}
+.def-box p{font-size:var(--text-base);color:var(--color-text);max-width:none;}
+.def-box strong{color:var(--color-primary);}
+.def-label{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-primary);margin-bottom:var(--space-2);display:block;}
+
+/* ===== EXAMPLE SENTENCES ===== */
+.example-list{list-style:none;display:flex;flex-direction:column;gap:var(--space-3);}
+.example-item{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);font-size:var(--text-base);position:relative;}
+.example-item .ex-tag{display:inline-block;font-size:var(--text-xs);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);margin-bottom:var(--space-2);}
+.ex-tag.simples{background:var(--color-blue-highlight);color:var(--color-blue);}
+.ex-tag.complexa{background:var(--color-purple-highlight);color:var(--color-purple);}
+.ex-tag.coordenada{background:var(--color-orange-highlight);color:var(--color-orange);}
+.ex-tag.subordinada{background:var(--color-gold-highlight);color:var(--color-gold);}
+.example-item blockquote{font-style:italic;font-size:var(--text-base);color:var(--color-text);margin-bottom:var(--space-2);}
+.example-item .ex-note{font-size:var(--text-sm);color:var(--color-text-muted);}
+.highlight-verde{background:color-mix(in oklch,var(--color-success) 18%,transparent);border-radius:3px;padding:0 3px;}
+.highlight-azul{background:color-mix(in oklch,var(--color-blue) 18%,transparent);border-radius:3px;padding:0 3px;}
+.highlight-violeta{background:color-mix(in oklch,var(--color-purple) 18%,transparent);border-radius:3px;padding:0 3px;}
+.highlight-laranja{background:color-mix(in oklch,var(--color-orange) 18%,transparent);border-radius:3px;padding:0 3px;}
+.highlight-ouro{background:color-mix(in oklch,var(--color-gold) 18%,transparent);border-radius:3px;padding:0 3px;}
+
+/* ===== INFO GRID ===== */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:var(--space-4);margin-bottom:var(--space-6);}
+.info-tile{background:var(--color-surface);border:1px solid oklch(from var(--color-text) l c h/0.08);border-radius:var(--radius-xl);padding:var(--space-5);box-shadow:var(--shadow-sm);}
+.info-tile-icon{font-size:2rem;margin-bottom:var(--space-3);}
+.info-tile-title{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2);color:var(--color-text);}
+.info-tile p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:none;}
+
+/* ===== COMPARISON TABLE ===== */
+.cmp-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-border);margin-bottom:var(--space-6);font-size:var(--text-sm);}
+.cmp-table th{background:var(--color-surface-offset);padding:var(--space-3) var(--space-4);font-weight:700;text-align:left;border-bottom:1px solid var(--color-border);color:var(--color-text);}
+.cmp-table td{padding:var(--space-3) var(--space-4);border-bottom:1px solid oklch(from var(--color-text) l c h/0.06);vertical-align:top;color:var(--color-text-muted);}
+.cmp-table tr:last-child td{border-bottom:none;}
+.cmp-table tr:hover td{background:var(--color-surface-offset);}
+.cmp-table .col-asp{font-weight:600;color:var(--color-text);background:var(--color-surface-2);}
+.badge{display:inline-block;font-size:var(--text-xs);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);}
+.badge-azul{background:var(--color-blue-highlight);color:var(--color-blue);}
+.badge-violeta{background:var(--color-purple-highlight);color:var(--color-purple);}
+
+/* ===== SCHEME / DIAGRAM ===== */
+.scheme{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin-bottom:var(--space-6);}
+.scheme-title{font-size:var(--text-sm);font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-4);}
+.tree{display:flex;flex-direction:column;align-items:center;gap:0;}
+.tree-node{background:var(--color-primary);color:var(--color-text-inverse);padding:var(--space-2) var(--space-5);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:700;text-align:center;}
+.tree-node.secondary{background:var(--color-surface-offset-2);color:var(--color-text);border:1px solid var(--color-border);}
+.tree-branch{display:flex;align-items:flex-start;gap:var(--space-8);margin-top:0;}
+.tree-col{display:flex;flex-direction:column;align-items:center;gap:0;}
+.tree-line-v{width:2px;height:var(--space-5);background:var(--color-divider);}
+.tree-line-h-wrap{display:flex;align-items:flex-start;gap:0;}
+.tree-h{height:2px;width:var(--space-8);background:var(--color-divider);margin-top:calc(var(--space-5)/2);}
+.tree-sub{display:flex;flex-direction:column;align-items:center;gap:0;}
+.tree-node.blue{background:var(--color-blue-highlight);color:var(--color-blue);border:1px solid color-mix(in oklch,var(--color-blue) 30%,transparent);}
+.tree-node.purple{background:var(--color-purple-highlight);color:var(--color-purple);border:1px solid color-mix(in oklch,var(--color-purple) 30%,transparent);}
+.tree-node.green{background:var(--color-success-highlight);color:var(--color-success);border:1px solid color-mix(in oklch,var(--color-success) 30%,transparent);}
+.tree-node.orange{background:var(--color-orange-highlight);color:var(--color-orange);border:1px solid color-mix(in oklch,var(--color-orange) 30%,transparent);}
+.tree-node.gold{background:var(--color-gold-highlight);color:var(--color-gold);border:1px solid color-mix(in oklch,var(--color-gold) 30%,transparent);}
+
+/* ===== INTERACTIVE CLASSIFIER ===== */
+.classifier{margin-bottom:var(--space-6);}
+.cl-input-wrap{display:flex;gap:var(--space-3);margin-bottom:var(--space-4);}
+.cl-input{flex:1;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-3) var(--space-4);font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);transition:border-color var(--transition),box-shadow var(--transition);}
+.cl-input:focus{outline:none;border-color:var(--color-primary);box-shadow:0 0 0 3px color-mix(in oklch,var(--color-primary) 15%,transparent);}
+.btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-lg);font-size:var(--text-sm);font-weight:700;transition:all var(--transition);cursor:pointer;}
+.btn-primary{background:var(--color-primary);color:var(--color-text-inverse);}
+.btn-primary:hover{background:var(--color-primary-hover);}
+.btn-primary:active{background:var(--color-primary-active);}
+.btn-ghost{background:transparent;color:var(--color-text-muted);border:1px solid var(--color-border);}
+.btn-ghost:hover{background:var(--color-surface-offset);color:var(--color-text);}
+.cl-result{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);display:none;}
+.cl-result.show{display:block;animation:fadeIn 0.2s ease;}
+.cl-verdict{font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-2);}
+.cl-verdict.simples{color:var(--color-blue);}
+.cl-verdict.complexa{color:var(--color-purple);}
+.cl-verdict.invalida{color:var(--color-error);}
+.cl-explanation{font-size:var(--text-sm);color:var(--color-text-muted);}
+.cl-tags{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-3);}
+
+/* ===== QUIZ ===== */
+.quiz-wrap{max-width:680px;}
+.quiz-question-num{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-text-faint);margin-bottom:var(--space-2);}
+.quiz-question{font-size:var(--text-lg);font-weight:700;color:var(--color-text);margin-bottom:var(--space-5);line-height:1.4;}
+.quiz-question em{font-style:italic;color:var(--color-primary);}
+.quiz-options{display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-5);}
+.quiz-opt{background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);cursor:pointer;font-size:var(--text-base);text-align:left;transition:all var(--transition);display:flex;align-items:center;gap:var(--space-3);}
+.quiz-opt:hover:not(:disabled){border-color:var(--color-primary);background:var(--color-primary-highlight);}
+.quiz-opt.correct{background:var(--color-success-highlight);border-color:var(--color-success);color:var(--color-success);}
+.quiz-opt.wrong{background:var(--color-error-highlight);border-color:var(--color-error);color:var(--color-error);}
+.quiz-opt:disabled{cursor:not-allowed;}
+.quiz-opt-letter{width:28px;height:28px;border-radius:var(--radius-full);background:var(--color-surface-dynamic);display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700;flex-shrink:0;}
+.quiz-opt.correct .quiz-opt-letter{background:var(--color-success);color:#fff;}
+.quiz-opt.wrong .quiz-opt-letter{background:var(--color-error);color:#fff;}
+.quiz-feedback{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-4);display:none;font-size:var(--text-sm);}
+.quiz-feedback.show{display:block;animation:fadeIn 0.2s ease;}
+.quiz-feedback.correct{background:var(--color-success-highlight);border-color:color-mix(in oklch,var(--color-success) 30%,transparent);color:var(--color-success);}
+.quiz-feedback.wrong{background:var(--color-error-highlight);border-color:color-mix(in oklch,var(--color-error) 30%,transparent);color:var(--color-error);}
+.quiz-nav{display:flex;gap:var(--space-3);align-items:center;}
+.quiz-progress{font-size:var(--text-sm);color:var(--color-text-muted);margin-left:auto;}
+.quiz-score-panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);text-align:center;display:none;}
+.quiz-score-panel.show{display:block;animation:fadeIn 0.3s ease;}
+.score-num{font-family:var(--font-display);font-size:var(--text-2xl);color:var(--color-primary);}
+.score-stars{font-size:2rem;margin:var(--space-3) 0;}
+.quiz-dots{display:flex;gap:var(--space-2);flex-wrap:wrap;justify-content:center;margin-top:var(--space-4);}
+.quiz-dot{width:10px;height:10px;border-radius:var(--radius-full);background:var(--color-surface-dynamic);}
+.quiz-dot.hit{background:var(--color-success);}
+.quiz-dot.miss{background:var(--color-error);}
+
+/* ===== PHRASE BUILDER ===== */
+.builder-wrap{margin-bottom:var(--space-6);}
+.builder-sentence{background:var(--color-surface-2);border:2px dashed var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);min-height:56px;font-size:var(--text-base);color:var(--color-text);margin-bottom:var(--space-4);display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);}
+.builder-sentence.valid{border-color:var(--color-success);border-style:solid;background:var(--color-success-highlight);}
+.builder-sentence.invalid{border-color:var(--color-error);border-style:solid;}
+.builder-chips{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-4);}
+.chip{padding:var(--space-2) var(--space-3);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);cursor:pointer;transition:all var(--transition);user-select:none;}
+.chip:hover{background:var(--color-primary-highlight);border-color:var(--color-primary);color:var(--color-primary);}
+.chip.placed{opacity:0.35;cursor:default;pointer-events:none;}
+.chip.in-sentence{background:var(--color-primary-highlight);border-color:var(--color-primary);color:var(--color-primary);cursor:pointer;}
+.chip.in-sentence:hover{background:var(--color-error-highlight);border-color:var(--color-error);color:var(--color-error);}
+.builder-status{font-size:var(--text-sm);color:var(--color-text-muted);display:flex;align-items:center;gap:var(--space-2);}
+.builder-status.ok{color:var(--color-success);}
+.builder-status.bad{color:var(--color-error);}
+.builder-controls{display:flex;gap:var(--space-3);flex-wrap:wrap;}
+.builder-exercise{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);margin-bottom:var(--space-4);}
+.builder-exercise-label{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-text-faint);margin-bottom:var(--space-1);}
+.builder-exercise-task{font-size:var(--text-base);font-weight:600;color:var(--color-text);margin-bottom:var(--space-3);}
+
+/* ===== LABELER ===== */
+.labeler-wrap{margin-bottom:var(--space-6);}
+.labeler-sentence{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);font-size:var(--text-base);font-style:italic;margin-bottom:var(--space-4);line-height:2;}
+.labeler-word{cursor:pointer;padding:2px 4px;border-radius:3px;transition:background var(--transition);}
+.labeler-word:hover{background:var(--color-primary-highlight);}
+.labeler-word.labeled-suj{background:color-mix(in oklch,var(--color-blue) 20%,transparent);outline:1px solid var(--color-blue);}
+.labeler-word.labeled-pred{background:color-mix(in oklch,var(--color-success) 20%,transparent);outline:1px solid var(--color-success);}
+.labeler-word.labeled-nexo{background:color-mix(in oklch,var(--color-gold) 20%,transparent);outline:1px solid var(--color-gold);}
+.labeler-tools{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-4);}
+.labeler-btn{padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);border:2px solid;font-size:var(--text-sm);font-weight:700;cursor:pointer;transition:all var(--transition);}
+.labeler-btn[data-label="suj"]{border-color:var(--color-blue);color:var(--color-blue);}
+.labeler-btn[data-label="suj"].active{background:var(--color-blue);color:#fff;}
+.labeler-btn[data-label="pred"]{border-color:var(--color-success);color:var(--color-success);}
+.labeler-btn[data-label="pred"].active{background:var(--color-success);color:#fff;}
+.labeler-btn[data-label="nexo"]{border-color:var(--color-gold);color:var(--color-gold);}
+.labeler-btn[data-label="nexo"].active{background:var(--color-gold);color:#fff;}
+.labeler-btn.clear-btn{border-color:var(--color-border);color:var(--color-text-muted);}
+.labeler-btn.clear-btn:hover{background:var(--color-surface-dynamic);}
+.labeler-legend{display:flex;gap:var(--space-4);flex-wrap:wrap;font-size:var(--text-xs);margin-bottom:var(--space-3);}
+.legend-item{display:flex;align-items:center;gap:var(--space-2);}
+.legend-dot{width:10px;height:10px;border-radius:2px;}
+
+/* ===== ACCORDION ===== */
+.accordion{border:1px solid var(--color-border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:var(--space-6);}
+.accordion-item{border-bottom:1px solid oklch(from var(--color-text) l c h/0.06);}
+.accordion-item:last-child{border-bottom:none;}
+.accordion-btn{width:100%;display:flex;align-items:center;gap:var(--space-3);padding:var(--space-4) var(--space-5);background:var(--color-surface);font-size:var(--text-base);font-weight:600;text-align:left;cursor:pointer;transition:background var(--transition);}
+.accordion-btn:hover{background:var(--color-surface-offset);}
+.accordion-btn[aria-expanded="true"]{background:var(--color-primary-highlight);color:var(--color-primary);}
+.accordion-icon{margin-left:auto;transition:transform 0.2s ease;color:var(--color-text-muted);}
+.accordion-btn[aria-expanded="true"] .accordion-icon{transform:rotate(180deg);color:var(--color-primary);}
+.accordion-body{display:none;padding:var(--space-4) var(--space-5);background:var(--color-surface-2);font-size:var(--text-base);color:var(--color-text-muted);}
+.accordion-body.open{display:block;animation:fadeIn 0.2s ease;}
+.accordion-body p,.accordion-body li{color:var(--color-text-muted);}
+.accordion-body ul{padding-left:var(--space-5);margin-top:var(--space-2);}
+.accordion-body li{margin-bottom:var(--space-1);}
+
+/* ===== GLOSSARY ===== */
+.glossary-search{width:100%;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-3) var(--space-4);font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);margin-bottom:var(--space-4);transition:border-color var(--transition);}
+.glossary-search:focus{outline:none;border-color:var(--color-primary);}
+.glossary-list{display:flex;flex-direction:column;gap:0;}
+.glossary-entry{padding:var(--space-4) var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-lg);margin-bottom:var(--space-3);background:var(--color-surface);}
+.glossary-term{font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-1);}
+.glossary-def{font-size:var(--text-sm);color:var(--color-text-muted);}
+.glossary-entry.hidden{display:none;}
+
+/* ===== STEP LIST ===== */
+.step-list{display:flex;flex-direction:column;gap:var(--space-4);margin-bottom:var(--space-6);}
+.step-item{display:flex;gap:var(--space-4);align-items:flex-start;}
+.step-num{width:32px;height:32px;border-radius:var(--radius-full);background:var(--color-primary);color:var(--color-text-inverse);display:flex;align-items:center;justify-content:center;font-size:var(--text-sm);font-weight:800;flex-shrink:0;margin-top:2px;}
+.step-body{flex:1;}
+.step-body h4{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-1);}
+.step-body p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:none;}
+
+/* ===== FILL-IN ===== */
+.fill-wrap{margin-bottom:var(--space-6);}
+.fill-item{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-3);}
+.fill-sentence{font-size:var(--text-base);line-height:2;margin-bottom:var(--space-3);}
+.fill-blank{display:inline-block;min-width:80px;border-bottom:2px solid var(--color-primary);background:transparent;font-size:var(--text-base);color:var(--color-text);text-align:center;padding:2px 6px;border-radius:0;font-family:var(--font-body);}
+.fill-blank:focus{outline:none;border-bottom-color:var(--color-primary);background:var(--color-primary-highlight);}
+.fill-blank.correct{border-bottom-color:var(--color-success);background:var(--color-success-highlight);color:var(--color-success);}
+.fill-blank.wrong{border-bottom-color:var(--color-error);background:var(--color-error-highlight);color:var(--color-error);}
+.fill-check-btn{margin-top:var(--space-2);}
+.fill-msg{font-size:var(--text-sm);margin-top:var(--space-2);display:none;}
+.fill-msg.show{display:block;}
+.fill-msg.ok{color:var(--color-success);}
+.fill-msg.bad{color:var(--color-error);}
+
+/* ===== WELCOME ===== */
+.hero-welcome{text-align:center;padding:var(--space-12) var(--space-6);max-width:600px;margin:0 auto;}
+.hero-welcome .logo-big{font-family:var(--font-display);font-size:var(--text-2xl);color:var(--color-text);margin-bottom:var(--space-2);}
+.hero-welcome p{font-size:var(--text-base);color:var(--color-text-muted);margin-bottom:var(--space-8);}
+.feature-pills{display:flex;flex-wrap:wrap;gap:var(--space-2);justify-content:center;margin-bottom:var(--space-6);}
+.feature-pill{background:var(--color-surface-offset);border-radius:var(--radius-full);padding:var(--space-2) var(--space-4);font-size:var(--text-sm);color:var(--color-text-muted);}
+.start-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(160px,100%),1fr));gap:var(--space-3);max-width:500px;margin:0 auto;}
+.start-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-4);cursor:pointer;transition:all var(--transition);text-align:center;}
+.start-card:hover{border-color:var(--color-primary);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.start-card-icon{font-size:2rem;margin-bottom:var(--space-2);}
+.start-card-label{font-size:var(--text-sm);font-weight:700;color:var(--color-text);}
+
+/* ===== MOBILE ===== */
+.hamburger{display:none;flex-direction:column;gap:5px;padding:var(--space-2);cursor:pointer;border-radius:var(--radius-md);}
+.hamburger span{width:22px;height:2px;background:var(--color-text-muted);border-radius:2px;transition:all 0.2s;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:oklch(0.1 0 0/0.4);z-index:90;}
+@media(max-width:768px){
+  .app-layout{grid-template-columns:1fr;}
+  .topbar{grid-column:1;}
+  .sidebar{position:fixed;top:0;left:-280px;width:260px;height:100dvh;z-index:95;transition:left 0.3s cubic-bezier(0.16,1,0.3,1);}
+  .sidebar.open{left:0;}
+  .sidebar-overlay.open{display:block;}
+  .main-content{padding:var(--space-6) var(--space-4);}
+  .hamburger{display:flex;}
+  .start-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="app-layout" id="app">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="logo" href="#" onclick="navigate('welcome')">
+      <svg class="logo-icon" viewBox="0 0 36 36" fill="none" aria-label="Logótipo">
+        <rect width="36" height="36" rx="10" fill="var(--color-primary)"/>
+        <rect x="8" y="10" width="14" height="2.5" rx="1.25" fill="white"/>
+        <rect x="8" y="15" width="20" height="2.5" rx="1.25" fill="white"/>
+        <rect x="8" y="20" width="10" height="2.5" rx="1.25" fill="white"/>
+        <circle cx="28" cy="22" r="5" fill="white" opacity="0.9"/>
+        <text x="28" y="26" text-anchor="middle" font-size="7" font-weight="bold" fill="var(--color-primary)">F</text>
+      </svg>
+      <span>A Frase</span>
+    </a>
+    <div class="topbar-right">
+      <div class="progress-bar-wrap" title="Progresso">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <span class="progress-label" id="progressLabel">0 / 8</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Alternar tema">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-section-label">Aprender</div>
+    <a class="nav-item active" data-view="welcome" onclick="navigate('welcome')">
+      <span class="nav-dot"></span>Início
+    </a>
+    <a class="nav-item" data-view="frase-def" onclick="navigate('frase-def')">
+      <span class="nav-dot"></span>O que é uma frase?
+    </a>
+    <a class="nav-item" data-view="tipos" onclick="navigate('tipos')">
+      <span class="nav-dot"></span>Tipos de frases
+    </a>
+    <a class="nav-item" data-view="simples" onclick="navigate('simples')">
+      <span class="nav-dot"></span>Frase simples
+    </a>
+    <a class="nav-item" data-view="complexa" onclick="navigate('complexa')">
+      <span class="nav-dot"></span>Frase complexa
+    </a>
+    <a class="nav-item" data-view="nexos" onclick="navigate('nexos')">
+      <span class="nav-dot"></span>Nexos de coordenação e subordinação
+    </a>
+    <div class="nav-divider"></div>
+    <div class="nav-section-label">Praticar</div>
+    <a class="nav-item" data-view="classificador" onclick="navigate('classificador')">
+      <span class="nav-dot"></span>Classificar frases <span class="nav-badge">inter.</span>
+    </a>
+    <a class="nav-item" data-view="exercicios" onclick="navigate('exercicios')">
+      <span class="nav-dot"></span>Exercícios de preenchimento
+    </a>
+    <a class="nav-item" data-view="construtor" onclick="navigate('construtor')">
+      <span class="nav-dot"></span>Construir frases
+    </a>
+    <a class="nav-item" data-view="rotulador" onclick="navigate('rotulador')">
+      <span class="nav-dot"></span>Rotular constituintes
+    </a>
+    <div class="nav-divider"></div>
+    <div class="nav-section-label">Avaliar</div>
+    <a class="nav-item" data-view="quiz" onclick="navigate('quiz')">
+      <span class="nav-dot"></span>Questionário <span class="nav-badge quiz">12 Qs</span>
+    </a>
+    <a class="nav-item" data-view="glossario" onclick="navigate('glossario')">
+      <span class="nav-dot"></span>Glossário
+    </a>
+  </nav>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- ======== VIEW: WELCOME ======== -->
+      <section class="view active" id="view-welcome">
+        <div class="hero-welcome">
+          <div class="logo-big">A Frase em Português</div>
+          <p>Uma aplicação completa para compreender o que é uma frase e dominar a distinção entre frase simples e frase complexa.</p>
+          <div class="feature-pills">
+            <span class="feature-pill">📖 Definições e exemplos</span>
+            <span class="feature-pill">🌳 Esquemas e diagramas</span>
+            <span class="feature-pill">✏️ Exercícios interativos</span>
+            <span class="feature-pill">🏆 Questionário de avaliação</span>
+          </div>
+          <div class="start-grid">
+            <div class="start-card" onclick="navigate('frase-def')">
+              <div class="start-card-icon">📌</div>
+              <div class="start-card-label">O que é uma frase?</div>
+            </div>
+            <div class="start-card" onclick="navigate('simples')">
+              <div class="start-card-icon">🔵</div>
+              <div class="start-card-label">Frase simples</div>
+            </div>
+            <div class="start-card" onclick="navigate('complexa')">
+              <div class="start-card-icon">🟣</div>
+              <div class="start-card-label">Frase complexa</div>
+            </div>
+            <div class="start-card" onclick="navigate('quiz')">
+              <div class="start-card-icon">🏆</div>
+              <div class="start-card-label">Questionário</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: O QUE É UMA FRASE ======== -->
+      <section class="view" id="view-frase-def">
+        <div class="page-header">
+          <span class="page-label">Fundamentos</span>
+          <h1 class="page-title">O que é uma frase?</h1>
+          <p class="page-subtitle">Compreender a definição, os elementos essenciais e as características de uma frase em português europeu.</p>
+        </div>
+
+        <div class="def-box">
+          <span class="def-label">Definição</span>
+          <p>Uma <strong>frase</strong> é uma unidade linguística com <strong>sentido completo</strong>, formada por um ou mais constituintes que exprimem um pensamento, um sentimento, uma ordem ou uma pergunta. Em português, a frase típica organiza-se em torno de um <strong>predicado</strong> (obrigatório) e, habitualmente, de um <strong>sujeito</strong>.</p>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-tile">
+            <div class="info-tile-icon">🧩</div>
+            <div class="info-tile-title">Sujeito</div>
+            <p>Elemento sobre o qual se diz algo. Pode ser simples, composto, subentendido (nulo) ou indeterminado. O verbo concorda com ele em número e pessoa.</p>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-icon">⚙️</div>
+            <div class="info-tile-title">Predicado</div>
+            <p>Aquilo que se diz do sujeito. Obrigatório na frase. Tem sempre um verbo como núcleo — o <em>predicado verbal</em> ou o <em>predicado nominal</em>.</p>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-icon">🔗</div>
+            <div class="info-tile-title">Constituintes facultativos</div>
+            <p>Complementos e modificadores (c. direto, c. indireto, c. oblíquo, modificadores do nome, do grupo verbal, da frase, etc.).</p>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-icon">✅</div>
+            <div class="info-tile-title">Sentido completo</div>
+            <p>A frase transmite uma mensagem autónoma e inteligível. "Choveu." é uma frase; "choveu porque" não o é (sentido incompleto).</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Exemplos de frases com análise</div>
+          <ul class="example-list">
+            <li class="example-item">
+              <blockquote><span class="highlight-azul">A Maria</span> <span class="highlight-verde">comprou pão na padaria</span>.</blockquote>
+              <div class="ex-note">
+                <span class="badge badge-azul">Sujeito simples</span> A Maria &nbsp;|&nbsp;
+                <span class="badge" style="background:var(--color-success-highlight);color:var(--color-success)">Predicado verbal</span> comprou pão na padaria
+              </div>
+            </li>
+            <li class="example-item">
+              <blockquote><span class="highlight-verde">Choveu</span> toda a tarde.</blockquote>
+              <div class="ex-note">
+                <span class="badge" style="background:var(--color-warning-highlight);color:var(--color-warning)">Sujeito nulo/indeterminado</span> (verbo impessoal) &nbsp;|&nbsp;
+                <span class="badge" style="background:var(--color-success-highlight);color:var(--color-success)">Predicado verbal</span> Choveu toda a tarde
+              </div>
+            </li>
+            <li class="example-item">
+              <blockquote><span class="highlight-azul">O céu</span> <span class="highlight-verde">está limpo</span>.</blockquote>
+              <div class="ex-note">
+                <span class="badge badge-azul">Sujeito simples</span> O céu &nbsp;|&nbsp;
+                <span class="badge" style="background:var(--color-success-highlight);color:var(--color-success)">Predicado nominal</span> está limpo
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Critérios para identificar uma frase</div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Existe um verbo conjugado?</h4>
+                <p>Toda a frase prototípica contém pelo menos um verbo conjugado (com flexão em pessoa, número, tempo, modo e aspeto). Se não existir, pode tratar-se de uma frase nominal ou de uma frase exclamativa/imperativa reduzida.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Tem sentido completo?</h4>
+                <p>A sequência deve transmitir uma mensagem autónoma. "Porque ele veio" não tem sentido completo sozinha — é uma oração subordinada.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Quantas orações tem?</h4>
+                <p>Se tiver <strong>uma oração</strong> → frase simples. Se tiver <strong>duas ou mais orações</strong> → frase complexa. Este critério é fundamental para a classificação.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: TIPOS DE FRASES ======== -->
+      <section class="view" id="view-tipos">
+        <div class="page-header">
+          <span class="page-label">Tipologia</span>
+          <h1 class="page-title">Tipos de frases</h1>
+          <p class="page-subtitle">As frases classificam-se segundo dois critérios independentes: forma e modalidade.</p>
+        </div>
+
+        <div class="accordion" id="acc-modalidade">
+          <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+              <span>📢</span> Classificação por modalidade <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-body">
+              <p style="margin-bottom:var(--space-3)">A modalidade diz respeito à atitude do falante perante o conteúdo da frase.</p>
+              <ul>
+                <li><strong>Declarativa:</strong> afirma ou nega algo. <em>«O João foi ao cinema.»</em></li>
+                <li><strong>Interrogativa:</strong> formula uma pergunta. <em>«Onde está o meu livro?»</em></li>
+                <li><strong>Imperativa:</strong> exprime uma ordem, pedido ou conselho. <em>«Abre a janela!»</em></li>
+                <li><strong>Exclamativa:</strong> exprime uma emoção intensa. <em>«Que bela paisagem!»</em></li>
+                <li><strong>Optativa / Desiderativa:</strong> exprime um desejo. <em>«Oxalá corra tudo bem!»</em></li>
+              </ul>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+              <span>🔄</span> Classificação por forma <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-body">
+              <ul>
+                <li><strong>Afirmativa:</strong> o predicado não inclui negação. <em>«Ele estuda muito.»</em></li>
+                <li><strong>Negativa:</strong> inclui um elemento de negação (<em>não, nunca, jamais</em>…). <em>«Ele não estuda.»</em></li>
+              </ul>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+              <span>🏗️</span> Classificação pela estrutura oracional <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-body">
+              <p style="margin-bottom:var(--space-2)">Este é o critério central desta aplicação:</p>
+              <ul>
+                <li><strong>Frase simples</strong> — uma única oração (um único verbo conjugado ou um único predicado).</li>
+                <li><strong>Frase complexa</strong> — duas ou mais orações ligadas por nexos de coordenação ou de subordinação.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="scheme">
+          <div class="scheme-title">Esquema: Classificação da Frase por Estrutura</div>
+          <div class="tree">
+            <div class="tree-node">Frase</div>
+            <div class="tree-line-v"></div>
+            <div class="tree-branch">
+              <div class="tree-col">
+                <div class="tree-node blue">Frase Simples</div>
+                <div class="tree-line-v"></div>
+                <div class="tree-node secondary" style="font-size:var(--text-xs)">Uma oração</div>
+              </div>
+              <div style="width:var(--space-8);height:2px;background:var(--color-divider);margin-top:16px;"></div>
+              <div class="tree-col">
+                <div class="tree-node purple">Frase Complexa</div>
+                <div class="tree-line-v"></div>
+                <div class="tree-branch">
+                  <div class="tree-col">
+                    <div class="tree-node orange">Coordenação</div>
+                  </div>
+                  <div style="width:var(--space-5);height:2px;background:var(--color-divider);margin-top:16px;"></div>
+                  <div class="tree-col">
+                    <div class="tree-node gold">Subordinação</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: FRASE SIMPLES ======== -->
+      <section class="view" id="view-simples">
+        <div class="page-header">
+          <span class="page-label">Estrutura</span>
+          <h1 class="page-title">Frase simples</h1>
+          <p class="page-subtitle">Constituída por uma única oração, com um só predicado e, geralmente, um sujeito.</p>
+        </div>
+
+        <div class="def-box">
+          <span class="def-label">Definição</span>
+          <p>A <strong>frase simples</strong> é aquela que contém <strong>uma única oração</strong>, ou seja, apenas um verbo conjugado (ou um único predicado, no caso das frases nominais). Não inclui orações coordenadas nem subordinadas.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Exemplos de frases simples</div>
+          <ul class="example-list">
+            <li class="example-item">
+              <span class="ex-tag simples">Simples</span>
+              <blockquote>A professora <span class="highlight-verde">escreveu</span> o sumário no quadro.</blockquote>
+              <div class="ex-note">Um único verbo conjugado: <em>escreveu</em>. Sujeito simples + predicado verbal + complemento direto + modificador.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag simples">Simples</span>
+              <blockquote>Os alunos <span class="highlight-verde">são</span> aplicados.</blockquote>
+              <div class="ex-note">Um único verbo: <em>são</em> (predicativo). Predicado nominal.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag simples">Simples</span>
+              <blockquote><span class="highlight-verde">Choveu</span> muito este inverno.</blockquote>
+              <div class="ex-note">Verbo impessoal. Sujeito nulo. Um único predicado verbal.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag simples">Simples</span>
+              <blockquote>O Pedro e a Ana <span class="highlight-verde">foram</span> ao cinema.</blockquote>
+              <div class="ex-note">Sujeito composto (Pedro e Ana), mas ainda assim <strong>uma única oração</strong> (um predicado).</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag simples">Simples</span>
+              <blockquote>Silêncio, por favor!</blockquote>
+              <div class="ex-note">Frase nominal / imperativa elíptica. Sem verbo explícito, mas com sentido completo e um único predicado implícito.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Atenção — Sujeito composto ≠ Frase complexa</div>
+          <p style="color:var(--color-text-muted);margin-bottom:var(--space-4);">Um erro frequente é confundir sujeito composto com frase complexa. Veja a diferença:</p>
+          <table class="cmp-table">
+            <thead><tr><th>Exemplo</th><th>Tipo</th><th>Porquê?</th></tr></thead>
+            <tbody>
+              <tr><td><em>O João e a Maria vieram.</em></td><td><span class="badge badge-azul">Simples</span></td><td>Um verbo, dois sujeitos — é sujeito composto.</td></tr>
+              <tr><td><em>O João veio e a Maria ficou.</em></td><td><span class="badge badge-violeta">Complexa</span></td><td>Dois verbos, duas orações coordenadas.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: FRASE COMPLEXA ======== -->
+      <section class="view" id="view-complexa">
+        <div class="page-header">
+          <span class="page-label">Estrutura</span>
+          <h1 class="page-title">Frase complexa</h1>
+          <p class="page-subtitle">Formada por duas ou mais orações ligadas por nexos de coordenação ou de subordinação.</p>
+        </div>
+
+        <div class="def-box">
+          <span class="def-label">Definição</span>
+          <p>A <strong>frase complexa</strong> é aquela que contém <strong>duas ou mais orações</strong>. As orações podem ser ligadas por <strong>coordenação</strong> (relação de equipolência — orações independentes entre si) ou por <strong>subordinação</strong> (uma oração é dependente de outra — a oração principal).</p>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-tile">
+            <div class="info-tile-icon">🔗</div>
+            <div class="info-tile-title">Coordenação</div>
+            <p>As orações têm o mesmo estatuto sintático — são <strong>independentes</strong> entre si. Ligam-se por conjunções coordenativas (<em>e, mas, ou, porém, contudo, logo</em>…).</p>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-icon">🌳</div>
+            <div class="info-tile-title">Subordinação</div>
+            <p>Uma oração é <strong>principal</strong> e a outra(s) é <strong>subordinada(s)</strong> — dependente(s) da principal. Ligam-se por conjunções subordinativas (<em>que, porque, embora, quando, se</em>…).</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Exemplos — Coordenação</div>
+          <ul class="example-list">
+            <li class="example-item">
+              <span class="ex-tag coordenada">Coordenação copulativa</span>
+              <blockquote><span class="highlight-azul">Estudei para o teste</span> <span class="highlight-ouro">e</span> <span class="highlight-violeta">correu muito bem</span>.</blockquote>
+              <div class="ex-note"><span class="highlight-ouro">e</span> = conjunção coordenativa copulativa. Duas orações independentes de igual estatuto.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag coordenada">Coordenação adversativa</span>
+              <blockquote><span class="highlight-azul">Estudei</span>, <span class="highlight-ouro">mas</span> <span class="highlight-violeta">não passei no exame</span>.</blockquote>
+              <div class="ex-note"><span class="highlight-ouro">mas</span> = conjunção coordenativa adversativa. Exprime contraste ou oposição.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag coordenada">Coordenação disjuntiva</span>
+              <blockquote><span class="highlight-azul">Vens jantar connosco</span> <span class="highlight-ouro">ou</span> <span class="highlight-violeta">preferes ficar em casa</span>?</blockquote>
+              <div class="ex-note"><span class="highlight-ouro">ou</span> = conjunção coordenativa disjuntiva. Exprime alternativa ou exclusão.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag coordenada">Coordenação conclusiva</span>
+              <blockquote><span class="highlight-azul">Chovia muito</span>, <span class="highlight-ouro">portanto</span> <span class="highlight-violeta">ficámos em casa</span>.</blockquote>
+              <div class="ex-note"><span class="highlight-ouro">portanto</span> = conjunção coordenativa conclusiva. Apresenta uma conclusão.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Exemplos — Subordinação</div>
+          <ul class="example-list">
+            <li class="example-item">
+              <span class="ex-tag subordinada">Subordinação substantiva completiva</span>
+              <blockquote><span class="highlight-azul">Sei</span> <span class="highlight-ouro">que</span> <span class="highlight-violeta">o João veio</span>.</blockquote>
+              <div class="ex-note">Oração principal: <em>Sei</em>. Oração subordinada substantiva completiva: <em>que o João veio</em> (complemento direto).</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag subordinada">Subordinação adverbial causal</span>
+              <blockquote><span class="highlight-azul">Não fui à escola</span> <span class="highlight-ouro">porque</span> <span class="highlight-violeta">estava doente</span>.</blockquote>
+              <div class="ex-note">Oração principal: <em>Não fui à escola</em>. Oração subordinada adverbial causal: <em>porque estava doente</em>.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag subordinada">Subordinação adverbial condicional</span>
+              <blockquote><span class="highlight-ouro">Se</span> <span class="highlight-violeta">estudares</span>, <span class="highlight-azul">terás boas notas</span>.</blockquote>
+              <div class="ex-note">Oração subordinada adverbial condicional: <em>Se estudares</em>. Oração principal: <em>terás boas notas</em>.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag subordinada">Subordinação relativa</span>
+              <blockquote><span class="highlight-azul">O livro</span> <span class="highlight-ouro">que</span> <span class="highlight-violeta">compraste</span> <span class="highlight-azul">é muito interessante</span>.</blockquote>
+              <div class="ex-note">Oração relativa restritiva: <em>que compraste</em>. Modifica o nome <em>livro</em>.</div>
+            </li>
+            <li class="example-item">
+              <span class="ex-tag subordinada">Subordinação adverbial temporal</span>
+              <blockquote><span class="highlight-ouro">Quando</span> <span class="highlight-violeta">chegares a casa</span>, <span class="highlight-azul">liga-me</span>.</blockquote>
+              <div class="ex-note">Oração subordinada adverbial temporal: <em>Quando chegares a casa</em>. Oração principal: <em>liga-me</em>.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Comparação: Frase simples vs. Frase complexa</div>
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th>Aspeto</th>
+                <th><span class="badge badge-azul">Frase simples</span></th>
+                <th><span class="badge badge-violeta">Frase complexa</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-asp">N.º de orações</td>
+                <td>Uma oração</td>
+                <td>Duas ou mais orações</td>
+              </tr>
+              <tr>
+                <td class="col-asp">N.º de verbos conjugados</td>
+                <td>Um verbo conjugado</td>
+                <td>Dois ou mais verbos conjugados</td>
+              </tr>
+              <tr>
+                <td class="col-asp">Nexo entre orações</td>
+                <td>Não existe</td>
+                <td>Coordenação ou subordinação</td>
+              </tr>
+              <tr>
+                <td class="col-asp">Exemplo</td>
+                <td><em>A Ana leu o livro.</em></td>
+                <td><em>A Ana leu o livro e gostou muito.</em></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: NEXOS ======== -->
+      <section class="view" id="view-nexos">
+        <div class="page-header">
+          <span class="page-label">Ligação entre orações</span>
+          <h1 class="page-title">Nexos de coordenação e subordinação</h1>
+          <p class="page-subtitle">As conjunções e locuções conjuncionais que ligam as orações nas frases complexas.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Conjunções Coordenativas</div>
+          <table class="cmp-table">
+            <thead><tr><th>Tipo</th><th>Conjunções / Locuções</th><th>Valor semântico</th></tr></thead>
+            <tbody>
+              <tr><td class="col-asp">Copulativas</td><td><em>e, nem, não só… mas também</em></td><td>Adição, acumulação</td></tr>
+              <tr><td class="col-asp">Adversativas</td><td><em>mas, porém, contudo, todavia, no entanto</em></td><td>Contraste, oposição</td></tr>
+              <tr><td class="col-asp">Disjuntivas</td><td><em>ou, quer… quer, ora… ora</em></td><td>Alternativa, exclusão</td></tr>
+              <tr><td class="col-asp">Conclusivas</td><td><em>logo, portanto, por isso, por conseguinte, assim</em></td><td>Conclusão, consequência</td></tr>
+              <tr><td class="col-asp">Explicativas</td><td><em>pois, porque, que (= pois)</em></td><td>Explicação, justificação</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Conjunções Subordinativas</div>
+          <table class="cmp-table">
+            <thead><tr><th>Tipo de oração subordinada</th><th>Conjunções / Locuções</th></tr></thead>
+            <tbody>
+              <tr><td class="col-asp">Completivas</td><td><em>que, se, para que</em></td></tr>
+              <tr><td class="col-asp">Causais</td><td><em>porque, como, visto que, uma vez que, dado que, já que</em></td></tr>
+              <tr><td class="col-asp">Condicionais</td><td><em>se, caso, desde que, a não ser que, contanto que</em></td></tr>
+              <tr><td class="col-asp">Concessivas</td><td><em>embora, ainda que, mesmo que, apesar de que, por mais que</em></td></tr>
+              <tr><td class="col-asp">Temporais</td><td><em>quando, enquanto, logo que, assim que, depois que, antes que</em></td></tr>
+              <tr><td class="col-asp">Finais</td><td><em>para que, a fim de que, de modo que (+ conj.)</em></td></tr>
+              <tr><td class="col-asp">Consecutivas</td><td><em>de modo que, de maneira que, tanto que, tão… que</em></td></tr>
+              <tr><td class="col-asp">Comparativas</td><td><em>como, assim como, tal como, mais… do que, menos… do que</em></td></tr>
+              <tr><td class="col-asp">Relativas</td><td><em>que, o qual, a qual, cujo, onde (pronomes e advérbios relativos)</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="def-box" style="background:var(--color-gold-highlight);border-color:color-mix(in oklch,var(--color-gold) 25%,transparent);">
+          <span class="def-label" style="color:var(--color-gold)">💡 Dica de identificação</span>
+          <p>Para identificar se uma frase é simples ou complexa, <strong>conta o número de verbos conjugados</strong>. Se houver apenas um → frase simples; se houver dois ou mais → frase complexa. Em seguida, identifica o nexo (coordenativo ou subordinativo) que os une.</p>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: CLASSIFICADOR ======== -->
+      <section class="view" id="view-classificador">
+        <div class="page-header">
+          <span class="page-label">Interativo</span>
+          <h1 class="page-title">Classificar frases</h1>
+          <p class="page-subtitle">Escreve uma frase e a aplicação analisa se é simples ou complexa, identificando os nexos presentes.</p>
+        </div>
+
+        <div class="card classifier">
+          <div class="card-title">Analisador de frases</div>
+          <div class="cl-input-wrap">
+            <input class="cl-input" id="cl-input" type="text" placeholder="Escreve aqui uma frase em português…" autocomplete="off">
+            <button class="btn btn-primary" onclick="classifyInput()">Analisar</button>
+          </div>
+          <div class="cl-result" id="cl-result">
+            <div class="cl-verdict" id="cl-verdict"></div>
+            <div class="cl-explanation" id="cl-explanation"></div>
+            <div class="cl-tags" id="cl-tags"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Frases de exemplo para testar</div>
+          <ul class="example-list">
+            <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="O cão ladrou toda a noite.">
+              <span class="ex-tag simples">Testa-me →</span>
+              <blockquote>O cão ladrou toda a noite.</blockquote>
+            </li>
+            <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="A Beatriz estudou muito, mas não ficou satisfeita com a nota.">
+              <span class="ex-tag complexa">Testa-me →</span>
+              <blockquote>A Beatriz estudou muito, mas não ficou satisfeita com a nota.</blockquote>
+            </li>
+            <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="Sei que amanhã vai chover.">
+              <span class="ex-tag complexa">Testa-me →</span>
+              <blockquote>Sei que amanhã vai chover.</blockquote>
+            </li>
+            <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="Os alunos fizeram o trabalho de grupo.">
+              <span class="ex-tag simples">Testa-me →</span>
+              <blockquote>Os alunos fizeram o trabalho de grupo.</blockquote>
+            </li>
+            <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="Embora estivesse cansado, o atleta terminou a corrida.">
+              <span class="ex-tag complexa">Testa-me →</span>
+              <blockquote>Embora estivesse cansado, o atleta terminou a corrida.</blockquote>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ======== VIEW: EXERCÍCIOS ======== -->
+      <section class="view" id="view-exercicios">
+        <div class="page-header">
+          <span class="page-label">Praticar</span>
+          <h1 class="page-title">Exercícios de preenchimento</h1>
+          <p class="page-subtitle">Completa os espaços em branco com a conjunção ou classificação correta.</p>
+        </div>
+
+        <div class="fill-wrap" id="fill-wrap"></div>
+        <button class="btn btn-primary" onclick="checkFills()">Verificar respostas</button>
+        <button class="btn btn-ghost" onclick="resetFills()" style="margin-left:var(--space-2)">Recomeçar</button>
+      </section>
+
+      <!-- ======== VIEW: CONSTRUTOR ======== -->
+      <section class="view" id="view-construtor">
+        <div class="page-header">
+          <span class="page-label">Praticar</span>
+          <h1 class="page-title">Construir frases</h1>
+          <p class="page-subtitle">Ordena as palavras e os constituintes para formar frases simples ou complexas corretas.</p>
+        </div>
+        <div id="builder-container"></div>
+      </section>
+
+      <!-- ======== VIEW: ROTULADOR ======== -->
+      <section class="view" id="view-rotulador">
+        <div class="page-header">
+          <span class="page-label">Praticar</span>
+          <h1 class="page-title">Rotular constituintes</h1>
+          <p class="page-subtitle">Seleciona as palavras e atribui-lhes a função sintática: sujeito, predicado ou nexo.</p>
+        </div>
+        <div id="labeler-container"></div>
+      </section>
+
+      <!-- ======== VIEW: QUIZ ======== -->
+      <section class="view" id="view-quiz">
+        <div class="page-header">
+          <span class="page-label">Avaliar</span>
+          <h1 class="page-title">Questionário</h1>
+          <p class="page-subtitle">12 perguntas sobre a frase simples e complexa. Cada resposta tem retroalimentação imediata.</p>
+        </div>
+        <div class="quiz-wrap" id="quiz-wrap"></div>
+      </section>
+
+      <!-- ======== VIEW: GLOSSÁRIO ======== -->
+      <section class="view" id="view-glossario">
+        <div class="page-header">
+          <span class="page-label">Referência</span>
+          <h1 class="page-title">Glossário</h1>
+          <p class="page-subtitle">Consulta os principais termos da gramática da frase.</p>
+        </div>
+        <input class="glossary-search" id="glossary-search" placeholder="Pesquisar termo…" oninput="filterGlossary(this.value)">
+        <div class="glossary-list" id="glossary-list"></div>
+      </section>
+
+    </div><!-- /.container -->
+  </main>
+
+</div><!-- /#app -->
+
+<script>
+// ===== THEME TOGGLE =====
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  if(t)t.addEventListener('click',()=>{
+    d=d==='dark'?'light':'dark';
+    r.setAttribute('data-theme',d);
+    t.innerHTML=d==='dark'?
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  });
+})();
+
+// ===== SIDEBAR MOBILE =====
+const hamburger=document.getElementById('hamburgerBtn');
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('sidebarOverlay');
+hamburger.addEventListener('click',()=>{sidebar.classList.toggle('open');overlay.classList.toggle('open');});
+overlay.addEventListener('click',()=>{sidebar.classList.remove('open');overlay.classList.remove('open');});
+
+// ===== ACCORDION =====
+function toggleAccordion(btn){
+  const body=btn.nextElementSibling;
+  const expanded=btn.getAttribute('aria-expanded')==='true';
+  btn.setAttribute('aria-expanded',String(!expanded));
+  body.classList.toggle('open',!expanded);
+}
+
+// ===== NAVIGATION =====
+const VIEWS=['welcome','frase-def','tipos','simples','complexa','nexos','classificador','exercicios','construtor','rotulador','quiz','glossario'];
+const LEARN_VIEWS=['frase-def','tipos','simples','complexa','nexos'];
+const PRACTICE_VIEWS=['classificador','exercicios','construtor','rotulador'];
+const EVAL_VIEWS=['quiz','glossario'];
+let visitedViews=new Set(['welcome']);
+
+function navigate(viewId){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const target=document.getElementById('view-'+viewId);
+  if(target){target.classList.add('active');}
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.classList.toggle('active',n.dataset.view===viewId);
+  });
+  visitedViews.add(viewId);
+  updateProgress();
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateProgress(){
+  const allViews=['frase-def','tipos','simples','complexa','nexos','classificador','exercicios','construtor','rotulador','quiz'];
+  const visited=allViews.filter(v=>visitedViews.has(v)).length;
+  const total=allViews.length;
+  document.getElementById('progressFill').style.width=((visited/total)*100)+'%';
+  document.getElementById('progressLabel').textContent=visited+' / '+total;
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(visitedViews.has(n.dataset.view)&&n.dataset.view!=='welcome'){n.classList.add('done');}
+  });
+}
+
+// ===== CLASSIFIER =====
+const CONJ_COORD={
+  copulativas:['e','nem','não só','mas também','tanto como'],
+  adversativas:['mas','porém','contudo','todavia','no entanto','entretanto'],
+  disjuntivas:['ou','quer','ora'],
+  conclusivas:['logo','portanto','por isso','por conseguinte','assim','então'],
+  explicativas:['pois','porque','que']
+};
+const CONJ_SUBORD={
+  completivas:['que','se'],
+  causais:['porque','como','visto que','uma vez que','dado que','já que','porquanto'],
+  condicionais:['se','caso','desde que','contanto que'],
+  concessivas:['embora','ainda que','mesmo que','apesar de que','por mais que','conquanto'],
+  temporais:['quando','enquanto','logo que','assim que','depois que','antes que','mal','sempre que'],
+  finais:['para que','a fim de que'],
+  consecutivas:['de modo que','de maneira que','tanto que'],
+  comparativas:['como','assim como','tal como','do que'],
+  relativas:['que','o qual','a qual','os quais','as quais','cujo','cuja','onde']
+};
+
+const VERB_FORMS=['sou','és','é','somos','sois','são','estar','estou','estás','está','estamos','estão','ter','tenho','tens','tem','temos','têm','ser','ir','vou','vais','vai','vamos','vão','fazer','faço','fazes','faz','fazemos','fazem','dizer','digo','dizes','diz','dizemos','dizem','poder','posso','podes','pode','podemos','podem','querer','quero','queres','quer','queremos','querem','saber','sei','sabes','sabe','sabemos','sabem','ver','vejo','vês','vê','vemos','veem','vir','venho','vens','vem','vimos','vêm'];
+
+function countVerbs(text){
+  const lower=text.toLowerCase();
+  const words=lower.split(/\s+/);
+  let count=0;
+  // heuristic: count verb forms endings
+  const endingsConj=[/[aeiou]ste[s]?$/,/[aeiou]r[aeo]m$/,/[aeiou]ndo$/,/[aeiou]sse[s]?$/,/[aeiou]r[ei]s?$/,/[aeiou](ei|ou|iu|eu)$/,/[aeiou](mos|des|am|em|ão)$/,/ia[s]?$/,/ava[s]?$/,/[aeiou]ndo$/ ];
+  const conjSet=new Set([...VERB_FORMS,'choveu','ladrou','fui','foi','foste','foram','fui','correste','correu','dormiu','comeu','bebeu','leu','escreveu','abriu','fechou','chegou','partiu','voltou','ficou','achou','disse','veio','soube','pôs','fez','trouxe','quis','pude','houve','nasceu','morreu','cresceu','andou','ouviu','sentiu','pediu','perdeu','ganhou','voltou','terminou','começou','acabou','estudou','aprendeu','ensinou','gostou','viu','conheceu','encontrou','reconheceu','percebeu','compreendeu','escutou','falou','perguntou','respondeu','explicou','mostrou','usou','colocou','tirou','deu','recebeu','enviou','comprou','vendeu','pagou','emprestou','esperou','lembrou','esqueceu','conseguiu','precisou','preferiu','decidiu','escolheu','tentou','criou','desenvolveu','construiu','destruiu','ajudou','deixou','permitiu','proibiu','obrigou','forçou','convenceu','descobriu','inventou','propôs','aceitou','recusou','concordou','discordou','separou','juntou','misturou','dividiu','multiplicou','somou','subtraiu','calculou','mediu','pesou','testou','verificou','confirmou','negou','afirmou','indicou','apontou','marcou','registou','anotou','publicou','imprimiu','leu','escreveu','pintou','desenhou','fotografou','filmou','gravou','tocou','cantou','dançou','jogou','ganhou','perdeu','empatou','correu','saltou','nadou','voou','caiu','subiu','desceu','entrou','saiu','abriu','fechou','ligou','desligou','aumentou','diminuiu','melhorou','piorou','mudou','transformou']);
+  for(const w of words){
+    const clean=w.replace(/[.,!?;:"""''()\-–]/g,'');
+    if(!clean)continue;
+    if(conjSet.has(clean)){count++;continue;}
+    if(endingsConj.some(r=>r.test(clean))&&clean.length>3){count++;}
+  }
+  return Math.max(count,0);
+}
+
+function findNexos(text){
+  const lower=' '+text.toLowerCase()+' ';
+  const found={coord:[],subord:[]};
+  for(const [tipo,list] of Object.entries(CONJ_COORD)){
+    for(const c of list){if(lower.includes(' '+c+' ')){found.coord.push({tipo,conj:c});}}
+  }
+  for(const [tipo,list] of Object.entries(CONJ_SUBORD)){
+    for(const c of list){if(lower.includes(' '+c+' ')){found.subord.push({tipo,conj:c});}}
+  }
+  return found;
+}
+
+function classifyInput(){
+  const input=document.getElementById('cl-input');
+  const text=input.value.trim();
+  const result=document.getElementById('cl-result');
+  const verdict=document.getElementById('cl-verdict');
+  const explanation=document.getElementById('cl-explanation');
+  const tags=document.getElementById('cl-tags');
+  if(!text){result.classList.remove('show');return;}
+  const nexos=findNexos(text);
+  const hasNexos=nexos.coord.length>0||nexos.subord.length>0;
+  const verbCount=countVerbs(text);
+  result.classList.add('show');
+  tags.innerHTML='';
+
+  if(text.split(/\s+/).length<2){
+    verdict.className='cl-verdict invalida';
+    verdict.textContent='⚠️ Texto muito curto';
+    explanation.textContent='Introduz uma frase completa para análise.';
+    return;
+  }
+
+  const isComplex=hasNexos||(verbCount>=2);
+  if(isComplex){
+    verdict.className='cl-verdict complexa';
+    verdict.innerHTML='🟣 Frase Complexa';
+    let exp='A frase contém ';
+    if(nexos.coord.length>0){exp+=`nexo(s) de coordenação: <em>${nexos.coord.map(n=>n.conj).join(', ')}</em>. `;}
+    if(nexos.subord.length>0){exp+=`nexo(s) de subordinação: <em>${nexos.subord.map(n=>n.conj).join(', ')}</em>. `;}
+    if(verbCount>=2){exp+=`Detetados ${verbCount} verbos conjugados. `;}
+    explanation.innerHTML=exp;
+    nexos.coord.forEach(n=>{
+      const b=document.createElement('span');
+      b.className='badge';
+      b.style.cssText='background:var(--color-orange-highlight);color:var(--color-orange);margin-right:6px;';
+      b.textContent='coord. '+n.tipo+': «'+n.conj+'»';
+      tags.appendChild(b);
+    });
+    nexos.subord.forEach(n=>{
+      const b=document.createElement('span');
+      b.className='badge';
+      b.style.cssText='background:var(--color-gold-highlight);color:var(--color-gold);margin-right:6px;';
+      b.textContent='subord. '+n.tipo+': «'+n.conj+'»';
+      tags.appendChild(b);
+    });
+  }else{
+    verdict.className='cl-verdict simples';
+    verdict.innerHTML='🔵 Frase Simples';
+    explanation.textContent='Não foram encontrados nexos de coordenação nem de subordinação. A frase contém uma única oração.';
+  }
+}
+
+function loadExample(el){
+  document.getElementById('cl-input').value=el.dataset.sent;
+  classifyInput();
+  document.getElementById('cl-result').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+document.getElementById('cl-input').addEventListener('keydown',e=>{if(e.key==='Enter')classifyInput();});
+
+// ===== FILL-IN EXERCISES =====
+const FILL_EXERCISES=[
+  {sentence:'A Marta ________ que queria ir ao cinema.',blanks:[['disse','afirmou','respondeu']],hint:'Predicado verbal (passado)'},
+  {sentence:'Não fui ao treino ________ estava com febre.',blanks:[['porque','pois','visto que']],hint:'Conjunção subordinativa causal'},
+  {sentence:'O Paulo estudou muito ________ não passou no exame.',blanks:[['mas','porém','contudo']],hint:'Conjunção coordenativa adversativa'},
+  {sentence:'________ chegares, avisa-me.',blanks:[['Quando','Assim que','Logo que']],hint:'Conjunção subordinativa temporal'},
+  {sentence:'Sei ________ ele virá amanhã.',blanks:[['que']],hint:'Conjunção subordinativa completiva'},
+  {sentence:'Ou fazes o trabalho ________ perdes a positiva.',blanks:[['ou']],hint:'Conjunção coordenativa disjuntiva'},
+  {sentence:'________ estivesse cansada, a Ana terminou o relatório.',blanks:[['Embora','Ainda que','Mesmo que']],hint:'Conjunção subordinativa concessiva'},
+  {sentence:'O livro ________ compraste é muito interessante.',blanks:[['que']],hint:'Pronome relativo'},
+];
+
+function buildFills(){
+  const wrap=document.getElementById('fill-wrap');
+  wrap.innerHTML='';
+  FILL_EXERCISES.forEach((ex,i)=>{
+    const div=document.createElement('div');
+    div.className='fill-item';
+    div.dataset.idx=i;
+    const parts=ex.sentence.split('________');
+    let html='<div class="fill-sentence">';
+    parts.forEach((p,j)=>{
+      html+=p;
+      if(j<parts.length-1){
+        html+=`<input class="fill-blank" type="text" data-idx="${i}" data-blank="${j}" placeholder="…" autocomplete="off">`;
+      }
+    });
+    html+=`</div><div class="fill-msg" id="fill-msg-${i}"></div>`;
+    html+=`<div style="font-size:var(--text-xs);color:var(--color-text-faint);margin-top:var(--space-1)">💡 ${ex.hint}</div>`;
+    div.innerHTML=html;
+    wrap.appendChild(div);
+  });
+}
+
+function checkFills(){
+  let allOk=true;
+  FILL_EXERCISES.forEach((ex,i)=>{
+    const input=document.querySelector(`.fill-blank[data-idx="${i}"]`);
+    if(!input)return;
+    const val=input.value.trim().toLowerCase();
+    const accepted=ex.blanks[0].map(a=>a.toLowerCase());
+    const ok=accepted.includes(val);
+    input.classList.toggle('correct',ok);
+    input.classList.toggle('wrong',!ok&&val!=='');
+    const msg=document.getElementById('fill-msg-'+i);
+    if(val===''){msg.className='fill-msg';msg.textContent='';return;}
+    msg.className='fill-msg show '+(ok?'ok':'bad');
+    msg.textContent=ok?'✓ Correto!':'✗ Tenta: '+ex.blanks[0][0];
+    if(!ok&&val!=='')allOk=false;
+  });
+}
+
+function resetFills(){
+  document.querySelectorAll('.fill-blank').forEach(i=>{i.value='';i.className='fill-blank';});
+  document.querySelectorAll('.fill-msg').forEach(m=>{m.className='fill-msg';m.textContent='';});
+}
+
+// ===== BUILDER =====
+const BUILDER_EXERCISES=[
+  {
+    task:'Forma uma frase simples declarativa afirmativa.',
+    words:['os','alunos','estudaram','muito','ontem'],
+    expected:['os alunos estudaram muito ontem','os alunos estudaram ontem muito']
+  },
+  {
+    task:'Constrói uma frase complexa com coordenação adversativa.',
+    words:['correu','mas','mas','cansou-se','a','Ana','muito'],
+    expected:['a ana correu mas cansou-se muito','a ana correu muito mas cansou-se']
+  },
+  {
+    task:'Forma uma frase complexa com subordinação causal.',
+    words:['porque','o','Pedro','não','foi','estava','à','escola','doente'],
+    expected:['o pedro não foi à escola porque estava doente','porque estava doente o pedro não foi à escola']
+  },
+  {
+    task:'Cria uma frase simples com sujeito composto.',
+    words:['e','o','João','a','Maria','foram','ao','parque'],
+    expected:['o joão e a maria foram ao parque']
+  }
+];
+
+let builderStates=[];
+
+function buildBuilder(){
+  const container=document.getElementById('builder-container');
+  container.innerHTML='';
+  builderStates=BUILDER_EXERCISES.map(ex=>({
+    placed:[],
+    available:[...ex.words].sort(()=>Math.random()-0.5)
+  }));
+  BUILDER_EXERCISES.forEach((ex,i)=>{
+    const div=document.createElement('div');
+    div.className='builder-exercise';
+    div.innerHTML=`
+      <div class="builder-exercise-label">Exercício ${i+1}</div>
+      <div class="builder-exercise-task">${ex.task}</div>
+      <div class="builder-sentence" id="bsent-${i}"></div>
+      <div class="builder-chips" id="bchips-${i}"></div>
+      <div class="builder-status" id="bstatus-${i}">Coloca as palavras na ordem correta.</div>
+      <div class="builder-controls">
+        <button class="btn btn-ghost" onclick="resetBuilder(${i})">↺ Recomeçar</button>
+        <button class="btn btn-primary" onclick="checkBuilder(${i})">Verificar</button>
+      </div>`;
+    container.appendChild(div);
+    renderBuilder(i);
+  });
+}
+
+function renderBuilder(i){
+  const state=builderStates[i];
+  const sent=document.getElementById('bsent-'+i);
+  const chips=document.getElementById('bchips-'+i);
+  sent.innerHTML=state.placed.map((w,j)=>`<span class="chip in-sentence" onclick="removeBuilderChip(${i},${j})">${w}</span>`).join('');
+  chips.innerHTML='';
+  state.available.forEach((w,j)=>{
+    const span=document.createElement('span');
+    span.className='chip';
+    span.textContent=w;
+    span.onclick=()=>placeBuilderChip(i,j);
+    chips.appendChild(span);
+  });
+}
+
+function placeBuilderChip(exIdx,chipIdx){
+  const state=builderStates[exIdx];
+  const word=state.available[chipIdx];
+  state.placed.push(word);
+  state.available.splice(chipIdx,1);
+  renderBuilder(exIdx);
+  document.getElementById('bstatus-'+exIdx).className='builder-status';
+  document.getElementById('bstatus-'+exIdx).textContent='Coloca as palavras na ordem correta.';
+}
+
+function removeBuilderChip(exIdx,placedIdx){
+  const state=builderStates[exIdx];
+  const word=state.placed[placedIdx];
+  state.placed.splice(placedIdx,1);
+  state.available.push(word);
+  renderBuilder(exIdx);
+}
+
+function checkBuilder(i){
+  const state=builderStates[i];
+  const ex=BUILDER_EXERCISES[i];
+  const sentence=state.placed.join(' ').toLowerCase().replace(/[.,!?]/g,'');
+  const ok=ex.expected.some(e=>sentence.trim()===e.trim());
+  const status=document.getElementById('bstatus-'+i);
+  const sent=document.getElementById('bsent-'+i);
+  status.className='builder-status '+(ok?'ok':'bad');
+  status.textContent=ok?'✓ Correto! Muito bem!':'✗ Não está certo. Tenta outra ordenação.';
+  sent.className='builder-sentence '+(ok?'valid':'invalid');
+}
+
+function resetBuilder(i){
+  const ex=BUILDER_EXERCISES[i];
+  builderStates[i]={placed:[],available:[...ex.words].sort(()=>Math.random()-0.5)};
+  renderBuilder(i);
+  document.getElementById('bstatus-'+i).className='builder-status';
+  document.getElementById('bstatus-'+i).textContent='Coloca as palavras na ordem correta.';
+  document.getElementById('bsent-'+i).className='builder-sentence';
+}
+
+// ===== LABELER =====
+const LABELER_EXERCISES=[
+  {
+    sentence:'A professora explicou a matéria com paciência.',
+    words:['A','professora','explicou','a','matéria','com','paciência'],
+    sujeito:[0,1],predicado:[2,3,4,5,6],nexo:[]
+  },
+  {
+    sentence:'O Pedro leu o livro e a Ana escreveu um poema.',
+    words:['O','Pedro','leu','o','livro','e','a','Ana','escreveu','um','poema'],
+    sujeito:[0,1,6,7],predicado:[2,3,4,8,9,10],nexo:[5]
+  },
+  {
+    sentence:'Não fui ao treino porque estava doente.',
+    words:['Não','fui','ao','treino','porque','estava','doente'],
+    sujeito:[],predicado:[0,1,2,3,5,6],nexo:[4]
+  }
+];
+
+let labelerStates=[];
+
+function buildLabeler(){
+  const container=document.getElementById('labeler-container');
+  container.innerHTML='';
+  labelerStates=LABELER_EXERCISES.map(()=>({labels:{},activeLabel:'suj'}));
+
+  LABELER_EXERCISES.forEach((ex,i)=>{
+    const div=document.createElement('div');
+    div.className='card labeler-wrap';
+    div.innerHTML=`
+      <div class="card-title">Exercício ${i+1}</div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3)">Seleciona a ferramenta e clica nas palavras.</p>
+      <div class="labeler-tools">
+        <button class="labeler-btn active" data-label="suj" onclick="setLabelerTool(${i},'suj',this)">Sujeito</button>
+        <button class="labeler-btn" data-label="pred" onclick="setLabelerTool(${i},'pred',this)">Predicado</button>
+        <button class="labeler-btn" data-label="nexo" onclick="setLabelerTool(${i},'nexo',this)">Nexo</button>
+        <button class="labeler-btn clear-btn" onclick="clearLabeler(${i})">✕ Limpar</button>
+      </div>
+      <div class="labeler-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--color-blue);opacity:0.5"></div><span style="font-size:var(--text-xs)">Sujeito</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--color-success);opacity:0.5"></div><span style="font-size:var(--text-xs)">Predicado</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--color-gold);opacity:0.5"></div><span style="font-size:var(--text-xs)">Nexo</span></div>
+      </div>
+      <div class="labeler-sentence" id="lsent-${i}"></div>
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;margin-top:var(--space-2)">
+        <button class="btn btn-primary" onclick="checkLabeler(${i})">Verificar</button>
+        <button class="btn btn-ghost" onclick="clearLabeler(${i})">Recomeçar</button>
+      </div>
+      <div class="fill-msg" id="lmsg-${i}" style="margin-top:var(--space-3)"></div>`;
+    container.appendChild(div);
+    renderLabeler(i);
+  });
+}
+
+function setLabelerTool(exIdx,label,btn){
+  labelerStates[exIdx].activeLabel=label;
+  const card=btn.closest('.labeler-wrap');
+  card.querySelectorAll('.labeler-btn[data-label]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function renderLabeler(i){
+  const ex=LABELER_EXERCISES[i];
+  const state=labelerStates[i];
+  const sent=document.getElementById('lsent-'+i);
+  sent.innerHTML=ex.words.map((w,j)=>{
+    const lbl=state.labels[j];
+    const cls=lbl?`labeler-word labeled-${lbl}`:'labeler-word';
+    return `<span class="${cls}" onclick="labelWord(${i},${j})">${w}</span> `;
+  }).join('');
+}
+
+function labelWord(exIdx,wordIdx){
+  const state=labelerStates[exIdx];
+  const current=state.labels[wordIdx];
+  if(current===state.activeLabel){delete state.labels[wordIdx];}
+  else{state.labels[wordIdx]=state.activeLabel;}
+  renderLabeler(exIdx);
+}
+
+function clearLabeler(i){
+  labelerStates[i].labels={};
+  renderLabeler(i);
+  document.getElementById('lmsg-'+i).className='fill-msg';
+  document.getElementById('lmsg-'+i).textContent='';
+}
+
+function checkLabeler(i){
+  const ex=LABELER_EXERCISES[i];
+  const state=labelerStates[i];
+  let correct=0,total=0;
+  ex.words.forEach((_,j)=>{
+    const expectedLabel=ex.sujeito.includes(j)?'suj':ex.predicado.includes(j)?'pred':ex.nexo.includes(j)?'nexo':null;
+    if(expectedLabel){total++;if(state.labels[j]===expectedLabel)correct++;}
+  });
+  const pct=total>0?Math.round((correct/total)*100):0;
+  const msg=document.getElementById('lmsg-'+i);
+  msg.className='fill-msg show '+(pct>=80?'ok':'bad');
+  msg.textContent=pct>=80?`✓ ${correct}/${total} corretos (${pct}%)! Muito bem!`:`✗ ${correct}/${total} corretos (${pct}%). Revê a análise.`;
+}
+
+// ===== QUIZ =====
+const QUIZ_QUESTIONS=[
+  {q:'Qual das seguintes frases é uma <em>frase simples</em>?',opts:['O João foi à escola e a Maria ficou em casa.','A Ana comprou um livro na livraria.','Sei que ele virá amanhã.','Fui ao treino porque estava bem disposto.'],correct:1,exp:'«A Ana comprou um livro na livraria.» tem um único verbo conjugado (comprou) e uma única oração — frase simples.'},
+  {q:'Qual das seguintes frases é uma <em>frase complexa</em>?',opts:['Os pássaros cantam de manhã.','Choveu toda a tarde.','Estudei muito, mas não passei.','O Pedro e a Maria brincaram no jardim.'],correct:2,exp:'«Estudei muito, mas não passei.» tem dois verbos conjugados ligados pela conjunção adversativa «mas» — frase complexa por coordenação.'},
+  {q:'A frase <em>«Embora chovesse, saímos à rua.»</em> é complexa por:',opts:['Coordenação copulativa','Coordenação adversativa','Subordinação concessiva','Subordinação causal'],correct:2,exp:'«Embora» é uma conjunção subordinativa concessiva. A oração «Embora chovesse» é subordinada concessiva, dependente da oração principal «saímos à rua».'},
+  {q:'Qual é o nexo de coordenação na frase <em>«Gosto de música, mas prefiro literatura»</em>?',opts:['e','que','mas','porque'],correct:2,exp:'«Mas» é uma conjunção coordenativa adversativa — exprime contraste ou oposição entre as duas orações.'},
+  {q:'A frase <em>«O Pedro e a Ana chegaram tarde.»</em> é:',opts:['Frase complexa por coordenação','Frase simples com sujeito composto','Frase complexa por subordinação','Frase nominal'],correct:1,exp:'Embora o sujeito seja composto (Pedro e Ana), existe apenas um verbo conjugado (chegaram) e uma única oração. É, portanto, uma frase simples.'},
+  {q:'Na frase <em>«Sei que o exame vai ser difícil.»</em> a conjunção «que» introduz uma:',opts:['Oração coordenada copulativa','Oração subordinada substantiva completiva','Oração subordinada adverbial causal','Oração relativa restritiva'],correct:1,exp:'«Que» funciona aqui como conjunção completiva, introduzindo uma oração subordinada substantiva completiva — complemento direto do verbo «sei».'},
+  {q:'Quantas orações tem a frase <em>«Quando chegares, faz o jantar porque eu vou chegar tarde.»</em>?',opts:['Uma','Duas','Três','Quatro'],correct:2,exp:'Há três verbos conjugados: chegares, faz, vou chegar. Logo três orações: subordinada temporal (Quando chegares), principal (faz o jantar) e subordinada causal (porque eu vou chegar tarde).'},
+  {q:'Qual das conjunções seguintes é <em>coordenativa conclusiva</em>?',opts:['porque','embora','portanto','quando'],correct:2,exp:'«Portanto» é uma conjunção coordenativa conclusiva, que introduz uma conclusão ou consequência. «Porque» e «quando» são subordinativas; «embora» é subordinativa concessiva.'},
+  {q:'A frase <em>«O livro que comprei é fascinante.»</em> contém uma:',opts:['Oração coordenada disjuntiva','Oração subordinada adverbial temporal','Oração subordinada relativa restritiva','Oração subordinada adverbial concessiva'],correct:2,exp:'«Que comprei» é uma oração subordinada relativa restritiva — modifica o nome «livro» e é introduzida pelo pronome relativo «que».'},
+  {q:'Qual das frases seguintes é <em>simples</em> com predicado nominal?',opts:['O sol brilhou o dia todo.','Os alunos são muito trabalhadores.','Ela leu o romance em dois dias.','O professor explicou a matéria.'],correct:1,exp:'«Os alunos são muito trabalhadores.» tem como predicado «são muito trabalhadores» — é um predicado nominal, com o verbo copulativo «ser» e o predicativo do sujeito «muito trabalhadores».'},
+  {q:'Qual é o tipo de subordinação na frase <em>«Fui ao médico para que me receitasse um tratamento.»</em>?',opts:['Adverbial causal','Adverbial final','Adverbial concessiva','Substantiva completiva'],correct:1,exp:'«Para que me receitasse um tratamento» é uma oração subordinada adverbial final — exprime a finalidade ou o objetivo da ação da oração principal.'},
+  {q:'Na frase <em>«Ou estudas ou reprovas.»</em> o nexo «ou…ou» indica:',opts:['Coordenação copulativa','Coordenação adversativa','Coordenação disjuntiva','Coordenação conclusiva'],correct:2,exp:'«Ou… ou» é uma conjunção coordenativa disjuntiva correlativa — exprime uma alternativa ou exclusão entre as duas orações.'},
+];
+
+let quizState={current:0,answers:[],done:false};
+
+function buildQuiz(){
+  quizState={current:0,answers:[],done:false};
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const wrap=document.getElementById('quiz-wrap');
+  if(quizState.done){renderQuizScore();return;}
+  const q=QUIZ_QUESTIONS[quizState.current];
+  const letters=['A','B','C','D'];
+  wrap.innerHTML=`
+    <div class="quiz-question-num">Pergunta ${quizState.current+1} de ${QUIZ_QUESTIONS.length}</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options" id="quiz-options">
+      ${q.opts.map((o,i)=>`
+        <button class="quiz-opt" data-idx="${i}" onclick="answerQuiz(${i})">
+          <span class="quiz-opt-letter">${letters[i]}</span>${o}
+        </button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="quiz-fb"></div>
+    <div class="quiz-nav">
+      <button class="btn btn-primary" id="quiz-next-btn" style="display:none" onclick="nextQuestion()">
+        ${quizState.current<QUIZ_QUESTIONS.length-1?'Próxima →':'Ver resultado'}
+      </button>
+      <div class="quiz-progress">${quizState.current+1} / ${QUIZ_QUESTIONS.length}</div>
+    </div>`;
+}
+
+function answerQuiz(idx){
+  const q=QUIZ_QUESTIONS[quizState.current];
+  quizState.answers.push(idx);
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===q.correct)o.classList.add('correct');
+    else if(i===idx&&idx!==q.correct)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('quiz-fb');
+  const ok=idx===q.correct;
+  fb.className='quiz-feedback show '+(ok?'correct':'wrong');
+  fb.textContent=(ok?'✓ Correto! ':'✗ Incorreto. ')+q.exp;
+  document.getElementById('quiz-next-btn').style.display='flex';
+}
+
+function nextQuestion(){
+  if(quizState.current<QUIZ_QUESTIONS.length-1){
+    quizState.current++;
+    renderQuiz();
+  }else{
+    quizState.done=true;
+    renderQuizScore();
+  }
+}
+
+function renderQuizScore(){
+  const wrap=document.getElementById('quiz-wrap');
+  const hits=quizState.answers.filter((a,i)=>a===QUIZ_QUESTIONS[i].correct).length;
+  const total=QUIZ_QUESTIONS.length;
+  const pct=Math.round((hits/total)*100);
+  const stars=pct>=90?'⭐⭐⭐':pct>=70?'⭐⭐':pct>=50?'⭐':'';
+  const msg=pct>=90?'Excelente! Dominas a matéria.':pct>=70?'Muito bem! Ainda há alguns pontos a rever.':pct>=50?'Não está mau. Revê as secções assinaladas.':'Convém rever os conteúdos antes de repetir.';
+  const dots=quizState.answers.map((a,i)=>`<div class="quiz-dot ${a===QUIZ_QUESTIONS[i].correct?'hit':'miss'}"></div>`).join('');
+  wrap.innerHTML=`
+    <div class="quiz-score-panel show">
+      <div class="score-num">${hits} / ${total}</div>
+      <div class="score-stars">${stars}</div>
+      <p style="margin-bottom:var(--space-4)">${msg}</p>
+      <div class="quiz-dots">${dots}</div>
+      <div style="margin-top:var(--space-6);display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="buildQuiz()">↺ Repetir questionário</button>
+        <button class="btn btn-ghost" onclick="navigate('frase-def')">📖 Rever matéria</button>
+      </div>
+    </div>`;
+}
+
+// ===== GLOSSARY =====
+const GLOSSARY=[
+  {term:'Frase',def:'Unidade linguística com sentido completo, organizada em torno de um predicado, que exprime um pensamento, sentimento, ordem ou pergunta.'},
+  {term:'Frase simples',def:'Frase constituída por uma única oração, com um só verbo conjugado ou predicado.'},
+  {term:'Frase complexa',def:'Frase constituída por duas ou mais orações, ligadas por nexos de coordenação ou de subordinação.'},
+  {term:'Oração',def:'Unidade sintática com um verbo conjugado (ou predicado). Elemento constitutivo da frase.'},
+  {term:'Sujeito',def:'Constituinte da frase sobre o qual se predica algo. Concorda com o verbo em número e pessoa. Pode ser simples, composto, subentendido (nulo) ou indeterminado.'},
+  {term:'Sujeito composto',def:'Sujeito formado por dois ou mais grupos nominais. Não implica frase complexa — pode existir numa frase simples.'},
+  {term:'Predicado',def:'Constituinte obrigatório da frase; aquilo que se diz do sujeito. Pode ser verbal ou nominal.'},
+  {term:'Predicado verbal',def:'Predicado cujo núcleo é um verbo que não seja copulativo. Ex.: «A Maria correu».'},
+  {term:'Predicado nominal',def:'Predicado constituído por um verbo copulativo (ser, estar, parecer, ficar…) e um predicativo do sujeito. Ex.: «O João está cansado».'},
+  {term:'Coordenação',def:'Relação sintática entre duas orações de igual estatuto (independentes entre si), ligadas por conjunções coordenativas.'},
+  {term:'Subordinação',def:'Relação sintática em que uma oração (subordinada) depende de outra (principal). A oração subordinada funciona como constituinte da principal.'},
+  {term:'Conjunção coordenativa',def:'Elemento que liga orações de igual estatuto. Subtipos: copulativa, adversativa, disjuntiva, conclusiva, explicativa.'},
+  {term:'Conjunção subordinativa',def:'Elemento que introduz uma oração subordinada, estabelecendo uma relação de dependência. Ex.: porque (causal), embora (concessiva), quando (temporal).'},
+  {term:'Oração principal',def:'Oração que serve de base à frase complexa por subordinação. As orações subordinadas são constituintes seus.'},
+  {term:'Oração subordinada',def:'Oração dependente de outra (a principal). Classifica-se segundo a função que desempenha: substantiva, adjetiva (relativa) ou adverbial.'},
+  {term:'Oração subordinada substantiva',def:'Oração subordinada que desempenha funções típicas de um nome (sujeito, complemento direto, etc.). Pode ser completiva, relativa ou interrogativa indireta.'},
+  {term:'Oração subordinada adverbial',def:'Oração subordinada que funciona como modificador da oração principal. Subtipos: causal, concessiva, condicional, temporal, final, consecutiva, comparativa.'},
+  {term:'Oração subordinada relativa',def:'Oração introduzida por pronome relativo (que, o qual, cujo…) ou advérbio relativo (onde). Pode ser restritiva ou explicativa.'},
+  {term:'Oração coordenada copulativa',def:'Oração ligada por e, nem, não só… mas também. Exprime adição ou acumulação.'},
+  {term:'Oração coordenada adversativa',def:'Oração ligada por mas, porém, contudo, todavia. Exprime contraste ou oposição.'},
+  {term:'Oração coordenada disjuntiva',def:'Oração ligada por ou, quer… quer. Exprime alternativa ou exclusão.'},
+  {term:'Oração coordenada conclusiva',def:'Oração ligada por logo, portanto, por isso. Exprime conclusão ou consequência.'},
+  {term:'Oração coordenada explicativa',def:'Oração ligada por pois, porque (= pois). Apresenta uma justificação ou explicação.'},
+  {term:'Nexo',def:'Elemento linguístico que liga duas orações — pode ser uma conjunção, locução conjuncional ou pronome/advérbio relativo.'},
+  {term:'Verbo copulativo',def:'Verbo que liga o sujeito ao predicativo (ser, estar, parecer, ficar, tornar-se…). Não exprime ação, mas um estado ou qualidade.'},
+  {term:'Pronome relativo',def:'Pronome que retoma um antecedente e introduz uma oração relativa: que, o qual, a qual, os quais, as quais, cujo, cuja, onde.'},
+];
+
+function buildGlossary(){
+  const list=document.getElementById('glossary-list');
+  list.innerHTML='';
+  GLOSSARY.sort((a,b)=>a.term.localeCompare(b.term,'pt')).forEach(g=>{
+    const div=document.createElement('div');
+    div.className='glossary-entry';
+    div.innerHTML=`<div class="glossary-term">${g.term}</div><div class="glossary-def">${g.def}</div>`;
+    list.appendChild(div);
+  });
+}
+
+function filterGlossary(val){
+  const lower=val.toLowerCase();
+  document.querySelectorAll('.glossary-entry').forEach(e=>{
+    const text=e.textContent.toLowerCase();
+    e.classList.toggle('hidden',!text.includes(lower));
+  });
+}
+
+// ===== INIT =====
+buildFills();
+buildBuilder();
+buildLabeler();
+buildQuiz();
+buildGlossary();
+</script>
+</body>
+</html>
