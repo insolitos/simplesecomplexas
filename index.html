@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Frase Simples e Complexa</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 /* ===== TOKENS ===== */
 :root,[data-theme="light"]{
@@ -38,8 +35,8 @@
   --space-1:0.25rem;--space-2:0.5rem;--space-3:0.75rem;--space-4:1rem;
   --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
   --space-12:3rem;--space-16:4rem;--space-20:5rem;
-  --font-display:'Instrument Serif',Georgia,serif;
-  --font-body:'Nunito','Segoe UI',sans-serif;
+  --font-display:Georgia,'Times New Roman',serif;
+  --font-body:system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 [data-theme="dark"]{
   --color-bg:#171614;--color-surface:#1c1b19;--color-surface-2:#201f1d;
@@ -314,6 +311,12 @@ p,li{text-wrap:pretty;max-width:72ch;}
 
 /* ===== WELCOME ===== */
 .hero-welcome{text-align:center;padding:var(--space-12) var(--space-6);max-width:600px;margin:0 auto;}
+.article-promo{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);text-align:left;background:var(--color-primary-highlight);border:1px solid color-mix(in oklch,var(--color-primary) 25%,transparent);border-radius:var(--radius-xl);padding:var(--space-4) var(--space-5);margin:0 auto var(--space-6);max-width:720px;}
+.article-promo p{font-size:var(--text-sm);color:var(--color-text);margin:0;max-width:52ch;}
+.article-promo a,.brand-footer a{color:var(--color-primary);font-weight:800;text-decoration:none;}
+.article-promo a:hover,.brand-footer a:hover{text-decoration:underline;}
+.brand-footer{max-width:860px;margin:var(--space-8) auto 0;padding:var(--space-5) var(--space-4);border-top:1px solid var(--color-divider);display:flex;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;color:var(--color-text-muted);font-size:var(--text-sm);}
+.analysis-note{background:var(--color-gold-highlight);border-left:4px solid var(--color-gold);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);font-size:var(--text-sm);color:var(--color-text);margin-bottom:var(--space-4);}
 .hero-welcome .logo-big{font-family:var(--font-display);font-size:var(--text-2xl);color:var(--color-text);margin-bottom:var(--space-2);}
 .hero-welcome p{font-size:var(--text-base);color:var(--color-text-muted);margin-bottom:var(--space-8);}
 .feature-pills{display:flex;flex-wrap:wrap;gap:var(--space-2);justify-content:center;margin-bottom:var(--space-6);}
@@ -337,6 +340,7 @@ p,li{text-wrap:pretty;max-width:72ch;}
   .main-content{padding:var(--space-6) var(--space-4);}
   .hamburger{display:flex;}
   .start-grid{grid-template-columns:repeat(2,1fr);}
+  .article-promo{align-items:flex-start;flex-direction:column;}
 }
 </style>
 </head>
@@ -364,7 +368,7 @@ p,li{text-wrap:pretty;max-width:72ch;}
       <div class="progress-bar-wrap" title="Progresso">
         <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
       </div>
-      <span class="progress-label" id="progressLabel">0 / 8</span>
+      <span class="progress-label" id="progressLabel" aria-live="polite">0 / 10</span>
       <button class="theme-toggle" data-theme-toggle aria-label="Alternar tema">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       </button>
@@ -426,7 +430,11 @@ p,li{text-wrap:pretty;max-width:72ch;}
       <section class="view active" id="view-welcome">
         <div class="hero-welcome">
           <div class="logo-big">A Frase em Português</div>
-          <p>Uma aplicação completa para compreender o que é uma frase e dominar a distinção entre frase simples e frase complexa.</p>
+          <p>Uma aplicação para compreender a frase e distinguir, com segurança, uma frase simples de uma frase complexa.</p>
+          <div class="article-promo">
+            <p>Queres conhecer a proposta pedagógica e os materiais de apoio associados a esta aplicação?</p>
+            <a href="https://jfborges.com/2026/05/11/a-frase-em-portugues-uma-aplicacao-gratuita-para-ensinar-a-serio-frases-simples-e-complexas/" target="_blank" rel="noopener noreferrer">Lê o artigo no TIC, Educação e WEB ↗</a>
+          </div>
           <div class="feature-pills">
             <span class="feature-pill">📖 Definições e exemplos</span>
             <span class="feature-pill">🌳 Esquemas e diagramas</span>
@@ -766,6 +774,7 @@ p,li{text-wrap:pretty;max-width:72ch;}
 
         <div class="card">
           <div class="card-title">Comparação: Frase simples vs. Frase complexa</div>
+          <p class="analysis-note">Contar verbos conjugados é uma ajuda inicial, mas não é uma regra infalível: formas não finitas, perífrases verbais e sujeitos compostos exigem que observes a estrutura das orações.</p>
           <table class="cmp-table">
             <thead>
               <tr>
@@ -851,7 +860,8 @@ p,li{text-wrap:pretty;max-width:72ch;}
         <div class="page-header">
           <span class="page-label">Interativo</span>
           <h1 class="page-title">Classificar frases</h1>
-          <p class="page-subtitle">Escreve uma frase e a aplicação analisa se é simples ou complexa, identificando os nexos presentes.</p>
+          <p class="page-subtitle">Escreve uma frase e observa uma estimativa dos verbos e dos nexos que a aplicação consegue reconhecer.</p>
+          <div class="analysis-note"><strong>Usa o resultado como pista, não como sentença final.</strong> A identificação automática é aproximada: confirma quantas orações existem e verifica se uma conjunção liga orações ou apenas palavras do sujeito.</div>
         </div>
 
         <div class="card classifier">
@@ -881,6 +891,10 @@ p,li{text-wrap:pretty;max-width:72ch;}
             <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="Sei que amanhã vai chover.">
               <span class="ex-tag complexa">Testa-me →</span>
               <blockquote>Sei que amanhã vai chover.</blockquote>
+            </li>
+            <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="O Pedro e a Ana chegaram cedo.">
+              <span class="ex-tag simples">Testa-me →</span>
+              <blockquote>O Pedro e a Ana chegaram cedo.</blockquote>
             </li>
             <li class="example-item" style="cursor:pointer" onclick="loadExample(this)" data-sent="Os alunos fizeram o trabalho de grupo.">
               <span class="ex-tag simples">Testa-me →</span>
@@ -949,6 +963,10 @@ p,li{text-wrap:pretty;max-width:72ch;}
       </section>
 
     </div><!-- /.container -->
+    <footer class="brand-footer">
+      <span>© TIC, Educação e WEB</span>
+      <a href="https://jfborges.com/2026/05/11/a-frase-em-portugues-uma-aplicacao-gratuita-para-ensinar-a-serio-frases-simples-e-complexas/" target="_blank" rel="noopener noreferrer">Sobre esta aplicação ↗</a>
+    </footer>
   </main>
 
 </div><!-- /#app -->
@@ -1047,6 +1065,8 @@ function countVerbs(text){
   for(const w of words){
     const clean=w.replace(/[.,!?;:"""''()\-–]/g,'');
     if(!clean)continue;
+    // Infinitives and gerunds are not separate conjugated verbs on their own.
+    if(/(?:ar|er|ir|ando|endo|indo)$/.test(clean))continue;
     if(conjSet.has(clean)){count++;continue;}
     if(endingsConj.some(r=>r.test(clean))&&clean.length>3){count++;}
   }
@@ -1086,34 +1106,45 @@ function classifyInput(){
     return;
   }
 
-  const isComplex=hasNexos||(verbCount>=2);
-  if(isComplex){
+  const likelyComplex=verbCount>=2;
+  const hasNexo=nexos.coord.length>0||nexos.subord.length>0;
+  if(likelyComplex){
     verdict.className='cl-verdict complexa';
-    verdict.innerHTML='🟣 Frase Complexa';
-    let exp='A frase contém ';
-    if(nexos.coord.length>0){exp+=`nexo(s) de coordenação: <em>${nexos.coord.map(n=>n.conj).join(', ')}</em>. `;}
-    if(nexos.subord.length>0){exp+=`nexo(s) de subordinação: <em>${nexos.subord.map(n=>n.conj).join(', ')}</em>. `;}
-    if(verbCount>=2){exp+=`Detetados ${verbCount} verbos conjugados. `;}
-    explanation.innerHTML=exp;
-    nexos.coord.forEach(n=>{
-      const b=document.createElement('span');
-      b.className='badge';
-      b.style.cssText='background:var(--color-orange-highlight);color:var(--color-orange);margin-right:6px;';
-      b.textContent='coord. '+n.tipo+': «'+n.conj+'»';
-      tags.appendChild(b);
-    });
-    nexos.subord.forEach(n=>{
-      const b=document.createElement('span');
-      b.className='badge';
-      b.style.cssText='background:var(--color-gold-highlight);color:var(--color-gold);margin-right:6px;';
-      b.textContent='subord. '+n.tipo+': «'+n.conj+'»';
-      tags.appendChild(b);
-    });
+    verdict.textContent='🟣 Provavelmente uma frase complexa';
+    let exp=`A aplicação reconheceu cerca de ${verbCount} formas verbais conjugadas`;
+    if(hasNexo){
+      const names=[...nexos.coord.map(n=>'«'+n.conj+'»'),...nexos.subord.map(n=>'«'+n.conj+'»')];
+      exp+=` e encontrou ${names.join(', ')} como possível(is) nexo(s)`;
+    }
+    exp+='. Confirma se cada forma verbal corresponde a uma oração.';
+    explanation.textContent=exp;
+  }else if(hasNexo){
+    verdict.className='cl-verdict invalida';
+    verdict.textContent='🔎 Verifica a estrutura';
+    const names=[...nexos.coord.map(n=>'«'+n.conj+'»'),...nexos.subord.map(n=>'«'+n.conj+'»')];
+    explanation.textContent=`Foi encontrado ${names.join(', ')}, mas a aplicação reconheceu menos de duas formas verbais conjugadas. O nexo pode ligar palavras do sujeito (como em «O Pedro e a Ana chegaram») ou a contagem automática pode não ter reconhecido um verbo. Analisa as orações antes de decidir.`;
   }else{
     verdict.className='cl-verdict simples';
-    verdict.innerHTML='🔵 Frase Simples';
-    explanation.textContent='Não foram encontrados nexos de coordenação nem de subordinação. A frase contém uma única oração.';
+    verdict.textContent='🔵 Provavelmente uma frase simples';
+    explanation.textContent=verbCount===1
+      ?'A aplicação reconheceu uma forma verbal conjugada e não encontrou um nexo. Confirma se há apenas uma oração; uma perífrase verbal ou uma forma verbal menos comum pode alterar a estimativa.'
+      :'A aplicação não reconheceu nexos nem formas verbais suficientes para classificar a frase. Revê-a manualmente ou tenta um exemplo.';
   }
+
+  nexos.coord.forEach(n=>{
+    const b=document.createElement('span');
+    b.className='badge';
+    b.style.cssText='background:var(--color-orange-highlight);color:var(--color-orange);margin-right:6px;';
+    b.textContent='coord. '+n.tipo+': «'+n.conj+'»';
+    tags.appendChild(b);
+  });
+  nexos.subord.forEach(n=>{
+    const b=document.createElement('span');
+    b.className='badge';
+    b.style.cssText='background:var(--color-gold-highlight);color:var(--color-gold);margin-right:6px;';
+    b.textContent='subord. '+n.tipo+': «'+n.conj+'»';
+    tags.appendChild(b);
+  });
 }
 
 function loadExample(el){
